@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Funcionario {
 
     @NotNull
-    @Size(min = 1, max = 150)
+    @Size(min = 4, max = 150)
     @Pattern(regexp = "^[a-zA-Z\\s]*$", message = "O nome deve conter apenas letras e espaços.")
     private String nome;
 
@@ -29,7 +29,7 @@ public class Funcionario {
     private String departamento;
 
     @NotNull
-    private Double salario;
+    private String salario;
 
     @NotNull
     private String dataAdmissao;
