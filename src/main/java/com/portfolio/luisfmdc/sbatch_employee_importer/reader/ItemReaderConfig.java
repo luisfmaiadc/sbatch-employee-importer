@@ -4,6 +4,8 @@ import com.portfolio.luisfmdc.sbatch_employee_importer.domain.Funcionario;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.infrastructure.item.file.FlatFileItemReader;
 import org.springframework.batch.infrastructure.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.infrastructure.item.support.SynchronizedItemStreamReader;
+import org.springframework.batch.infrastructure.item.support.builder.SynchronizedItemStreamReaderBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,15 @@ import org.springframework.core.io.Resource;
 
 @Configuration
 public class ItemReaderConfig {
+
+    @Bean
+    @StepScope
+    public SynchronizedItemStreamReader<Funcionario> synchronizedItemStreamReader(
+            FlatFileItemReader<Funcionario> flatFileItemReader) {
+        return new SynchronizedItemStreamReaderBuilder<Funcionario>()
+                .delegate(flatFileItemReader)
+                .build();
+    }
 
     @Bean
     @StepScope
@@ -22,6 +33,7 @@ public class ItemReaderConfig {
                 .delimited()
                 .names("nome", "email", "departamento", "salario", "dataAdmissao")
                 .targetType(Funcionario.class)
+                .saveState(false)
                 .build();
     }
 }

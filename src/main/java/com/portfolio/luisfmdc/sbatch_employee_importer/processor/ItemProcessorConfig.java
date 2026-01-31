@@ -50,7 +50,7 @@ public class ItemProcessorConfig {
             if (funcionariosEmailSet.contains(funcionario.getEmail())
                     || !isDataAdmissaoValida(funcionario.getDataAdmissao())
                     || !isSalarioValido(funcionario.getSalario())) {
-                log.warn("Erro de validação do funcionário: {}", funcionario.getEmail());
+                log.warn("[ValidatingItemProcessor] Funcionário inválido: {}", funcionario.getEmail());
                 throw new ValidationException("Erro de validação do funcionário: " + funcionario.getEmail());
             }
             funcionariosEmailSet.add(funcionario.getEmail());
